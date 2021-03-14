@@ -32,15 +32,18 @@ void arac_ekle(){
 	int b;
 	FILE *file=fopen("arac.txt","a");
 	printf("Arac plakasini giriniz:");
-	scanf("%d",&arac.plaka);
+    int temp=0;
+	scanf("%d",&temp);
+    arac.plaka = temp;
 	printf("Arac rengini giriniz:");
-	scanf("%s",&arac.renk);
+	scanf("%s",arac.renk);
 	printf("Arac model giriniz:");
-	scanf("%s",&arac.model);
+	scanf("%s",arac.model);
 	printf("Arac gunluk ucreti giriniz:");
 	scanf("%d",&arac.ucret);
-	printf("Arac musaitmi? Musait ise 1 deðil ise 0 giriniz:");
-	scanf("%d",&arac.musait);
+	printf("Arac musaitmi? Musait ise 1 deÄŸil ise 0 giriniz:");
+	scanf("%d",&temp);
+    arac.plaka = temp;
     fprintf(file,"%d %s %s %d %d \n",arac.plaka,arac.renk,arac.model,arac.ucret,arac.musait);
  printf("Arac basariyla eklendi. \n");
  fclose(file);
@@ -49,11 +52,13 @@ void arac_ekle(){
 }
 void arac_listele(){
 	struct arac_info list;
+    int temp=0;
 	FILE *file=fopen("arac.txt","r");
 	 while (!feof(file))
           {
 	 	
-	    fscanf(file,"%d %s %s %d %d ",&list.plaka,&list.renk,&list.model,&list.ucret,&list.musait);//veriler dosyadan okunuyor
+	    fscanf(file,"%d %s %s %d %d ",&list.plaka,list.renk,list.model,&list.ucret,&temp);//veriler dosyadan okunuyor
+        list.musait = temp;
 	    printf("Arac Plaka : %d\n",list.plaka);
         printf("Aracin rengi: %s\n",list.renk);
         printf("Aracin modeli: %s\n",list.model);
@@ -67,7 +72,7 @@ void arac_listele(){
     printf("---------------------------\n");
 }
 void arac_ara(){
-	int plaka;
+	int plaka, temp=0;
 	struct arac_info search;
 	printf("Aramak istediginiz aracin plakasini giriniz:");
 	scanf("%d",&plaka);
@@ -76,7 +81,8 @@ void arac_ara(){
 	 while(!feof(file))
      {
         
-               fscanf(file,"%d %s %s %d %d ",&search.plaka,&search.renk,&search.model,&search.ucret,&search.musait);
+               fscanf(file,"%d %s %s %d %d ",&search.plaka,search.renk,search.model,&search.ucret,&temp);
+               search.musait = temp;
                 if(plaka==search.plaka)
                 {
                   printf("Arac Bulundu.\n");
@@ -99,7 +105,7 @@ void arac_ara(){
 }
 void arac_sil(){
 	
-	int plaka;
+	int plaka, temp=0;
 	struct arac_info delete;
 	printf("Aramak istediginiz aracin plakasini giriniz:");
 	scanf("%d",&plaka);
@@ -107,7 +113,8 @@ void arac_sil(){
 	FILE *tmp=fopen("tmp.txt","w");
 	
 	while(!feof(file)){
-		fscanf(file,"%d %s %s %d %d ",&delete.plaka,&delete.renk,&delete.model,&delete.ucret,&delete.musait);
+		fscanf(file,"%d %s %s %d %d ",&delete.plaka,delete.renk,delete.model,&delete.ucret,&temp);
+        delete.musait = temp;
 		if(plaka!=delete.plaka){
 			 fprintf(tmp,"%d %s %s %d %d \n",delete.plaka,delete.renk,delete.model,delete.ucret,delete.musait);    
 		}
@@ -132,11 +139,11 @@ void musteri_ekle(){
 	printf("Musteri numarasini giriniz:");
 	scanf("%d",&ekle.musteri_no);
 	printf("Musteri ismi giriniz:");
-	scanf("%s",&ekle.isim);
+	scanf("%s",ekle.isim);
 	printf("Musteri soyisim giriniz:");
-	scanf("%s",&ekle.soy_isim);
+	scanf("%s",ekle.soy_isim);
 	printf("Memleket giriniz:");
-	scanf("%s",&ekle.memleket);
+	scanf("%s",ekle.memleket);
     fprintf(file,"%d %s %s %s \n",ekle.musteri_no,ekle.isim,ekle.soy_isim,ekle.memleket);
     printf("Musteri basariyla eklendi.\n");
  
@@ -149,7 +156,7 @@ void musteri_listele(){
 	 while (!feof(file))
           {
 	 	
-	    fscanf(file,"%d %s %s %s ",&list.musteri_no,&list.isim,&list.soy_isim,&list.memleket);
+	    fscanf(file,"%d %s %s %s ",&list.musteri_no,list.isim,list.soy_isim,list.memleket);
 	    printf("Musteri Numarasi : %d\n",list.musteri_no);
         printf("Musteri Ismi: %s\n",list.isim);
         printf("Musteri Soyismi %s\n",list.soy_isim);
@@ -170,7 +177,7 @@ void musteri_ara(){
 	FILE *file=fopen("musteri.txt","r");
 		 while(!feof(file))
      {
-               fscanf(file,"%d %s %s %s ",&search.musteri_no,&search.isim,&search.soy_isim,&search.memleket);
+               fscanf(file,"%d %s %s %s ",&search.musteri_no,search.isim,search.soy_isim,search.memleket);
                 if(number==search.musteri_no)
                 {
                  printf("Musteri Bulundu.\n");
@@ -199,7 +206,7 @@ void musteri_sil(){
 	FILE *file=fopen("musteri.txt","r");
 	FILE *tmp2=fopen("tmp2.txt","w");
 	while(!feof(file)){
-		fscanf(file,"%d %s %s %s ",&delete.musteri_no,&delete.isim,&delete.soy_isim,&delete.memleket);
+		fscanf(file,"%d %s %s %s ",&delete.musteri_no,delete.isim,delete.soy_isim,delete.memleket);
 		if(number!=delete.musteri_no){
 			fprintf(tmp2,"%d %s %s %s \n",delete.musteri_no,delete.isim,delete.soy_isim,delete.memleket);    
 		}
@@ -222,7 +229,7 @@ void musteri_sil(){
 
 
 void kiralama(){
-	int plaka;
+	int plaka, temp1=0;
 	struct arac_info arac;
 	struct kiralama_info kira;
 	FILE *file=fopen("kirala.txt","a");
@@ -231,7 +238,8 @@ void kiralama(){
 	printf("Kiralamak istediginiz aracin plakasini giriniz:");
 	scanf("%d",&plaka);
 	while(!feof(file2)){
-		fscanf(file2,"%d %s %s %d %d ",&arac.plaka,&arac.renk,&arac.model,&arac.ucret,&arac.musait);
+		fscanf(file2,"%d %s %s %d %d ",&arac.plaka,arac.renk,arac.model,&arac.ucret,&temp1);
+        arac.musait = temp1;
 		if(plaka==arac.plaka){
 			if(arac.musait==1){
 			printf("Kiralamak istediginiz aracin plakasini tekrar giriniz:");
@@ -239,7 +247,7 @@ void kiralama(){
 			printf("Musteri numarasi giriniz:");
 			scanf("%d",&kira.musteri_no);
 			printf("Kiramalama tarihi giriniz(GG.AA.YY):");
-			scanf("%s",&kira.kiralama_tarih);
+			scanf("%s",kira.kiralama_tarih);
 			fprintf(file,"%d %d %s \n",kira.plaka,kira.musteri_no,kira.kiralama_tarih);
 			arac.musait=0;
 			printf("Arac kiralandi.\n");
@@ -266,7 +274,7 @@ void kiralama(){
 
 
 void iade(){
-	int plaka;
+	int plaka, temp1=0;
     int musaid;
 	struct arac_info arac;
 	struct kiralama_info iade;
@@ -278,13 +286,14 @@ void iade(){
 	scanf("%d",&plaka);
 
 	while(!feof(file2)){
-		fscanf(file2,"%d %s %s %d %d",&arac.plaka,&arac.renk,&arac.model,&arac.ucret,&arac.musait);
+		fscanf(file2,"%d %s %s %d %d",&arac.plaka,arac.renk,arac.model,&arac.ucret,&temp1);
+        arac.musait = temp1;
     	while(!feof(file)){
-		fscanf(file,"%d %d %s",&iade.plaka,&iade.musteri_no,&iade.kiralama_tarih);
+		fscanf(file,"%d %d %s",&iade.plaka,&iade.musteri_no,iade.kiralama_tarih);
 		if(plaka==arac.plaka && plaka==iade.plaka){
 			if(arac.musait==0){
 			printf("Iade ettiginiz tarihi giriniz(GG.AA.YY):");
-			scanf("%s",&iade.iade_tarihi);
+			scanf("%s",iade.iade_tarihi);
 			fprintf(temp2,"%d %d %s %s\n",iade.plaka,iade.musteri_no,iade.kiralama_tarih,iade.iade_tarihi);
 			arac.musait=1;
 			printf("Arac Iade edildi.\n");
